@@ -2,14 +2,16 @@ import java.util.*;
 public class HomeworkOne {
     public static void main(String[] args) {
         int[][] M = {
-                        {2, 0, 1},
-                        {2, 0, 1},
-                        {2, 1, 0}
+                        {2, 1, 3, 0},
+                        {0, 1, 3, 2},
+                        {0, 1, 2, 3},
+                        {0, 1, 2, 3}
                     };
         int[][] W = {
-                        {2, 0, 1},
-                        {0, 2, 1},
-                        {2, 0, 1}
+                        {0, 2, 1, 3},
+                        {2, 0, 3, 1},
+                        {3, 2, 1, 0},
+                        {2, 3, 1, 0}
                     };
 
         questionFour(M, W);
@@ -30,30 +32,35 @@ public class HomeworkOne {
 
             System.out.print(m + " proposes to " + w + " [" + w + "," + matches.getOrDefault(w, -1) + "]  ");
             if (unmatchedWomen.contains(w)) {
+                System.out.print("Pair = " + "(" + m + "," + w + ") ");
                 System.out.print("Accepted");
                 matches.put(w, m);
                 unmatchedWomen.remove(w);
             } else {
                 int[] wPreferenceList = W[w];
-                if (matches.get(w) != wPreferenceList[0]) {
-                    System.out.print("Rejected");
-                    unmatchedMen.add(m); // m remains free
-                } else if (wPreferenceList[0] == m) {
+
+                // I think it has to do with the wPreferenceList[0]
+                if (getHighest(wPreferenceList, m, matches.get(w))) {
+                    System.out.print("Pair = " + "(" + m + "," + w + ") ");
                     System.out.print("Accepted");
                     int prevM = matches.get(w);
-                    matches.replace(w, m);
+                    matches.put(w, m);
                     unmatchedMen.add(prevM);
+                } else { // else w rejects m
+                    System.out.print("Rejected " + rank);
+                    unmatchedMen.add(m); // m remains free
                 }
             }
 
             System.out.println();
-            rank += 1;
-            mRank.replace(m, rank);
+            rank++;
+            mRank.put(m, rank);
         }
 
         for (Map.Entry entry : matches.entrySet()) {
-            System.out.println("(" + entry.getKey() + ", " + entry.getValue() + ")");
+            System.out.println("M = " + entry.getValue() + ", W = " + entry.getKey());
         }
+
 
     }
 
@@ -67,5 +74,21 @@ public class HomeworkOne {
         for (int r = 0; r < W.length; r++) {
             unmatchedWomen.add(r);
         }
+    }
+
+    public static boolean getHighest(int[] preferenceList, int curr, int prev) {
+
+        // which does it encounter first?
+        boolean value = false;
+        for (int i = 0; i < preferenceList.length; i++) {
+            if (preferenceList[i] == curr) {
+                value = true;
+                break;
+            } else if (preferenceList[i] == prev) {
+                break;
+            }
+        }
+
+        return value;
     }
 }
