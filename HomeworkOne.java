@@ -14,13 +14,22 @@ public class HomeworkOne {
                         {2, 3, 1, 0}
                     };
 
-        int n = 1000;
+        int n = 4;
+        long startRandom = System.currentTimeMillis();
         int[][] randomM = randomPreferenceList(n);
         int[][] randomW = randomPreferenceList(n);
-        int[] mRankOfM = new int[randomM.length];
-        int[] wRankOfW = new int[randomW.length];
-        galeShapleyAlgorithm(randomM, randomW, mRankOfM, wRankOfW);
+        long endRandom = System.currentTimeMillis();
+        int[] mRankOfM = new int[M.length];
+        int[] wRankOfW = new int[W.length];
+        long startGS = System.currentTimeMillis();
+        galeShapleyAlgorithm(M, W, mRankOfM, wRankOfW);
+        long endGS = System.currentTimeMillis();
+        System.out.println("\nGale-Shapley algorithm runtime: " + (endGS - startGS) + " milliseconds");
+        System.out.println("\nGenerate random lists runtime: " + (endRandom - startRandom) + " milliseconds");
+        long startGoodness = System.currentTimeMillis();
         defineGoodness(mRankOfM, wRankOfW, n);
+        long endGoodness = System.currentTimeMillis();
+        System.out.println("\nDefine Goodness runtime: " + (endGoodness - startGoodness) + " milliseconds");
     }
 
     public static void galeShapleyAlgorithm(int[][] M, int[][] W, int[] mRankOfM, int[] wRankOfW) {
