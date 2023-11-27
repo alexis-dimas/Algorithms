@@ -1,5 +1,5 @@
 import java.util.*;
-public class HomeworkNine {
+public class HomeworkEight {
     public static void main(String[] args) {
         String states[] = {"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware",
                             "District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
