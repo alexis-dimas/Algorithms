@@ -14,15 +14,15 @@ public class HomeworkOne {
                         {2, 3, 1, 0}
                     };
 
-        int n = 4;
+        int n = 10000;
         long startRandom = System.currentTimeMillis();
         int[][] randomM = randomPreferenceList(n);
         int[][] randomW = randomPreferenceList(n);
         long endRandom = System.currentTimeMillis();
-        int[] mRankOfM = new int[M.length];
-        int[] wRankOfW = new int[W.length];
+        int[] mRankOfM = new int[randomM.length];
+        int[] wRankOfW = new int[randomW.length];
         long startGS = System.currentTimeMillis();
-        galeShapleyAlgorithm(M, W, mRankOfM, wRankOfW);
+        galeShapleyAlgorithm(randomM, randomW, mRankOfM, wRankOfW);
         long endGS = System.currentTimeMillis();
         System.out.println("\nGale-Shapley algorithm runtime: " + (endGS - startGS) + " milliseconds");
         System.out.println("\nGenerate random lists runtime: " + (endRandom - startRandom) + " milliseconds");
