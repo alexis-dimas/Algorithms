@@ -1,7 +1,7 @@
 import java.util.*;
 public class HomeworkEight {
     public static void main(String[] args) {
-        String states[] = {"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware",
+        String[] states = {"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware",
                             "District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
                             "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts", "Michigan","Minnesota",
                             "Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey",
@@ -16,5 +16,32 @@ public class HomeworkEight {
         int[] electoralVotes2004 = {9,3,10,6,55,9,7,3,3,27,15,4,4,21,11,7,6,8,9,4,10,12,17,10,6,11,3,5,5,4,15,5,31,15,3,20,7,7,21,4,8,3,11,34,5,3,13,11,5,10,3};
         int[] electoralVotes2012 = {9,3,11,6,55,9,7,3,3,29,16,4,4,20,11,6,6,8,8,4,10,11,16,10,6,10,3,5,6,4,14,5,29,15,3,18,7,7,20,4,9,3,11,38,6,3,13,12,5,10,3};
         int[] electoralVotes2024 = {9,3,11,6,54,10,7,3,3,30,16,4,4,19,11,6,6,8,8,4,10,11,15,10,6,10,4,5,6,4,14,5,28,16,3,17,7,8,19,4,9,3,11,40,6,3,13,12,4,10,3};
+
+        int n = electoralVotes2024.length;
+        int K = 269;
+        long waysToTie = programmingProblemFour(electoralVotes2024, n, K);
+        System.out.println(waysToTie);
+    }
+
+    public static long programmingProblemFour(int[] electoralVotes2024, int n, int K) {
+        long[][] dp = new long[n + 1][K + 1];
+        for (int r = 0; r < dp.length; r++) dp[r][0] = 1;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= K; j++) {
+                if (electoralVotes2024[i - 1] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j - electoralVotes2024[i - 1]] + dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[n][K];
+    }
+
+    public static void printRows(long[][] dp) {
+        for (long[] row : dp) {
+            System.out.println(Arrays.toString(row));
+        }
     }
 }
